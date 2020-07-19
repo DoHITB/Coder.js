@@ -504,7 +504,7 @@ function fmt(t) {
 function getRaw(t) {
   grt = [];
   grt.push('/**\r\n');
-  grt.push(' * Code downloaded via codemaker\r\n');
+  grt.push(' * Code downloaded via codemaker (https://github.com/DoHITB/Coder.js/blob/master/Coder.js)\r\n');
   grt.push(' * Author: David Sole (DoHITB)\r\n');
   grt.push(' * Version: ' + version + '\r\n');
   grt.push(' * Find DoHITB on Twitter @dohitb\r\n');
