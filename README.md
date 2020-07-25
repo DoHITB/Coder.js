@@ -2,7 +2,7 @@
 Javascript applet for prettyprint source code on blogger. It also allows to download source file
 
 ## How it works
-Add it to your JS code on blogger, also add the custom CSS (code.css), and it's ready to use.
+Add it to your JS code on blogger (you can either download and cut/paste it, or just use "&lt;script type="text/javascript" src="https://dohitb.github.io/Coder.js/Coder.js"></script>, also add the custom CSS (code.css), and it's ready to use.
 
 &lt;div><br />
 [code lan=gral|cobol|net|sql]<br />
