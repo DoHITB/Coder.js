@@ -14,7 +14,12 @@
  * You can attach several [code] snippets, inside same div or on different div
  */
 
-var version = "2.0";
+/*
+ * CHANGE LOG
+ *  2.0: Initial version (review and comment)
+ *  2.1: Bugfix: when a block comment starts and ends on the same line, it not formats as expected
+ */
+var version = "2.1";
 var currIn = 0;
 var mc = '';
 var opc = false;
@@ -109,7 +114,6 @@ function replaceAll(t, b, r) {
   while (t.toString().indexOf(b) != -1) {
     t = t.toString().replace(b, r);
   }
-
   return t;
 }
 
@@ -311,6 +315,11 @@ function fmt(t) {
   let fmo = 0;
   let fmp = true;
 
+  /*@2.1 start*/
+  //fcom: indicates whenever a line have a block comment
+  let fcom = false;
+  /*@2.1 end*/
+
   //prf contains class names
   /*            0                   1                   2                   3                   4                   5*/
   //var prf = ['class="b_ei_opc"', 'class="b_ei_opd"', 'class="b_ei_opk"', 'class="b_ei_opt"', 'class="b_ei_opT"', 'class="b_ei_opy"'];
@@ -368,6 +377,10 @@ function fmt(t) {
 
         //increase span counter
         fmo++;
+
+        /*@2.1 start*/
+        fcom = true;
+        /*@2.1 end*/
       } else if (t.substring(fmi, (opx.length + fmi)) == opx && (!opc)) {
         /* We are on a comment block (/*).
          * 
@@ -377,6 +390,10 @@ function fmt(t) {
         opc = true;
         fmr += '<span ' + prf[0] + '>';
         fmo++;
+
+        /*@2.1 start*/
+        fcom = true;
+        /*@2.1 end*/
       } else if (t.substring(fmi, (ops.length + fmi)) == ops) {
         /* We are on a closing doc/comment block (* /).
          * 
@@ -474,22 +491,29 @@ function fmt(t) {
     fmr = fmSS;
 
     //add span for reserved words (prn / ptr)
-    for (fmi = 0; fmi < prnI; fmi++) {
-      //xxx: reserved word
-      //yyy: associated class
+    /*@2.1 start*/
+    //fcom = false means we're not on a comment block
+    if (fcom === false) {
+      /*@2.1 end*/
+      for (fmi = 0; fmi < prnI; fmi++) {
+        //xxx: reserved word
+        //yyy: associated class
 
-      //replace " xxx " by " <span class="yyy">xxx</span> "
-      fmr = replaceAll(fmr, '&nbsp;' + prn[fmi] + '&nbsp;', '&nbsp;<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>&nbsp;');
+        //replace " xxx " by " <span class="yyy">xxx</span> "
+        fmr = replaceAll(fmr, '&nbsp;' + prn[fmi] + '&nbsp;', '&nbsp;<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>&nbsp;');
 
-      //replace "xxx " by "<span class="yyy">xxx</span> "
-      fmr = replaceAll(fmr, prn[fmi] + '&nbsp;', '<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>&nbsp;');
+        //replace "xxx " by "<span class="yyy">xxx</span> "
+        fmr = replaceAll(fmr, prn[fmi] + '&nbsp;', '<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>&nbsp;');
 
-      //replace " xxx" by " <span class="yyy">xxx</span>"
-      fmr = replaceAll(fmr, '&nbsp;' + prn[fmi], '&nbsp;<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>');
+        //replace " xxx" by " <span class="yyy">xxx</span>"
+        fmr = replaceAll(fmr, '&nbsp;' + prn[fmi], '&nbsp;<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>');
 
-      //replace "." by "<span class="yyy">.</span> " --> This is just for COBOL
-      fmr = replaceAll(fmr, '.' + prn[fmi], '.<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>');
+        //replace "." by "<span class="yyy">.</span> " --> This is just for COBOL
+        fmr = replaceAll(fmr, '.' + prn[fmi], '.<span class="' + prt[fmi] + '">' + prn[fmi] + '</span>');
+      }
+      /*@2.1 start*/
     }
+    /*@2.1 end*/
   }
 
   //return
@@ -504,7 +528,7 @@ function fmt(t) {
 function getRaw(t) {
   grt = [];
   grt.push('/**\r\n');
-  grt.push(' * Code downloaded via codemaker (https://github.com/DoHITB/Coder.js/blob/master/Coder.js)\r\n');
+  grt.push(' * Code downloaded via codemaker (https://dohitb.github.io/Coder.js/Coder.js)\r\n');
   grt.push(' * Author: David Sole (DoHITB)\r\n');
   grt.push(' * Version: ' + version + '\r\n');
   grt.push(' * Find DoHITB on Twitter @dohitb\r\n');
@@ -540,7 +564,7 @@ function getRaw(t) {
  */
 function dlf(b) {
   dlfr = new FileReader();
-  dlfr.onload = function (event) {
+  dlfr.onload = function(event) {
     dlfs = document.createElement('a');
     dlfs.href = event.target.result;
     dlfs.target = '_blank';
