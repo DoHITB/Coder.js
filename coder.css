@@ -1,0 +1,90 @@
+/*Coder by DoHITB*/
+.b_ei_code{ 
+  background: #DDD;
+  cursor: default;
+  border-left: 1px solid #999;
+  border-top: 1px solid #000;
+  font-family: courier;
+  font-size: 12px;
+  color: black;
+  margin: 10px;
+  padding: 10px;
+  max-height: 1033px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.b_ei_code_raw{
+  margin-bottom: 10px;
+  border-bottom: 1px solid #000;
+  padding-bottom: 5px;
+  color: #0033CC;
+}
+
+.b_ei_code_raw span{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.b_ei_code div:hover{
+  background: #D0D0DF;
+  border-radius: 30px;
+}
+
+.b_ei_code div.b_ei_code_raw:hover{
+  border-radius: 0px;
+  background-color: inherit;
+}
+
+.b_ei_code span{
+  display: inline-block;
+}
+
+.b_ei_code_counter{
+  width: 30px;
+  padding-right: 20px;
+  border-right: 1px solid #000;
+  font-weight: 700;
+  color: #0033CC;
+}
+
+.b_ei_code_line{
+  padding-left: 10px;
+}
+
+.b_ei_opc{
+  color: #295A29;
+}
+
+.b_ei_opd{
+  color: #0033CC;
+}
+
+.b_ei_opk{
+  
+}
+
+.b_ei_opt{
+  color: #801A00;
+}
+
+.b_ei_opT{
+  color: #4D1000;
+}
+
+.b_ei_opy{
+  color: #295A29;
+}
+
+.b_ei_token{
+  font-weight: 700;
+  color: #66004C
+}
+
+.b_ei_function{
+  color: #B85C00;
+}
+
+.b_ei_hilite{
+  color: red;
+}
